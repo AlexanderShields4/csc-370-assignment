@@ -48,9 +48,9 @@ class PuzzleBoard:
         neighbours.append(self.move(empty, empty + 3))
 
       if col > 0:
-        neighbors.append(self.move(empty, empty - 1))
+        neighbours.append(self.move(empty, empty - 1))
        
       if col < 2:
-        neighbors.append(self.move(empty, empty + 1))
+        neighbours.append(self.move(empty, empty + 1))
 
       return neighbours
