@@ -42,10 +42,10 @@ class PuzzleBoard:
       col = empty % 3
 
       if row > 0:
-        neighbours.append(self.move(self, empty - 3))
+        neighbours.append(self.move(empty, empty - 3))
 
       if row < 2:
-        neighbours.append(self.move(self, empty + 3))
+        neighbours.append(self.move(empty, empty + 3))
 
       if col > 0:
         neighbors.append(self.move(empty, empty - 1))
