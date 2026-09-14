@@ -26,3 +26,7 @@ for _ in range(random.randint(2, 24)):
 board = PuzzleBoard(state)
 board.display()
 
+empty = board.find_empty()
+newposition = random.choice(MOVES[empty])
+board = board.move(empty, newposition)
+board.display()
