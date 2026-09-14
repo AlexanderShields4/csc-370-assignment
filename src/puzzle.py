@@ -16,11 +16,11 @@ class PuzzleBoard:
             print(self.state[i : i + 3])
         print()
 
-  # need to check goal state
+  
     def is_goal(self):
       return self.state == GOAL
 
-  #method to move blank
+ 
 
     def move(self, empty, newposition):
 
@@ -30,7 +30,7 @@ class PuzzleBoard:
 
       return PuzzleBoard(newstate)
 
-  #record blank, check up, down, left, right
+  
 
     def get_neighbors(self):
       
