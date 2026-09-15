@@ -11,5 +11,12 @@ def h1 (board):
   
   return count
 
-#h2
+#h2 Manthatten Distance
+
+def h2 (board):
+
+  distance = 0
+  for i in range (9):
+    
+
 #A*
