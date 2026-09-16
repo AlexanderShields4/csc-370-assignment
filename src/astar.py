@@ -1,3 +1,6 @@
+import heapq
+
+from puzzle import GOAL, PuzzleBoard
 #h1 Misplaced tiles
 
 def h1 (board):
@@ -19,7 +22,7 @@ def h2 (board):
   distance = 0
   for i in range (9):
 
-    title = board.state[i]
+    tile = board.state[i]
     if tile == 0:
       continue
 
