@@ -39,6 +39,66 @@ def h2(board):
 
     return distance
 
+# h3 Linear Conflict
+
+def h3(board):
+
+    distance = h2(board)
+    conflicts = 0
+    
+    for row in range(3):
+        
+        for col1 in range(3):
+            
+            tile1 = board.state[row * 3 + col1]
+            if tile1 == 0:
+                continue
+            goal1 = GOAL.index(tile1)
+            
+            if goal1 // 3 != row:
+                continue
+                
+            for col2 in range(col1 + 1, 3):
+                
+                tile2 = board.state[row * 3 + col2]
+                
+                if tile2 == 0:
+                    continue
+                goal2 = GOAL.index(tile2)
+                
+            if goal2 // 3 == row and goal1 > goal2:
+                conflicts += 1
+                
+    for col in range(3):
+
+        for row1 in range(3):
+
+            tile1 = board.state[row1 * 3 + col]
+            
+            if tile1 == 0:
+                continue
+            goal1 = GOAL.index(tile1)
+            
+            if goal1 // 3 != col:
+                continue
+                
+            for row2 in range(row1 + 1, 3):
+                
+                tile2 = board.state[row2 * 3 + col]
+                
+                if tile2 == 0:
+                    continue
+                goal2 = GOAL.index(tile2)
+                
+                if goal2 // 3 == col and goal1 > goal2:
+                    conflicts +=1
+
+return distance + 2 * conflicts
+                    
+                
+                
+        
+                
 
 # A*
 def astar(start_board, heuristic, stats=None):
