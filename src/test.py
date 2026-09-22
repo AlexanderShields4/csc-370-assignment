@@ -129,4 +129,4 @@ def run_experiments(number_of_problems=100):
 
 
 if __name__ == "__main__":
-    compare_heuristics()
+    run_experiments()
