@@ -47,6 +47,7 @@ def h3(board):
     conflicts = 0
     
     for row in range(3):
+        lineConflicts = 0
         
         for col1 in range(3):
             
@@ -67,9 +68,16 @@ def h3(board):
                 goal2 = GOAL.index(tile2)
                 
                 if goal2 // 3 == row and goal1 > goal2:
-                    conflicts += 1
+                    lineConflicts += 1
+
+        # Overlapping pairs only require one tile to leave the row.
+        if lineConflicts == 3:
+            conflicts += 2
+        elif lineConflicts > 0:
+            conflicts += 1
                 
     for col in range(3):
+        lineConflicts = 0
 
         for row1 in range(3):
 
@@ -91,7 +99,13 @@ def h3(board):
                 goal2 = GOAL.index(tile2)
                 
                 if goal2 % 3 == col and goal1 > goal2:
-                    conflicts +=1
+                    lineConflicts += 1
+
+        # The same non-overlap rule applies to a column.
+        if lineConflicts == 3:
+            conflicts += 2
+        elif lineConflicts > 0:
+            conflicts += 1
 
     return distance + 2 * conflicts
                     
