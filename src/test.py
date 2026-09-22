@@ -4,7 +4,7 @@ from astar import astar, h1, h2, h3
 from puzzle import GOAL, PuzzleBoard
 
 
-def make_random_board(target_depth):
+def make_depth_level(target_depth):
     current_level = [GOAL.copy()]
 
     # Remember every state BFS has already discovered
@@ -26,7 +26,11 @@ def make_random_board(target_depth):
 
         current_level = next_level
 
-    random_state = random.choice(current_level)
+    return current_level
+
+
+def make_random_board(target_depth):
+    random_state = random.choice(make_depth_level(target_depth))
     return PuzzleBoard(random_state.copy())
 
 
