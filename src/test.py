@@ -36,31 +36,36 @@ def compare_heuristics():
 
     h1_stats = {}
     h2_stats = {}
+    h3_stats = {}
 
     h1_path = astar(board, h1, h1_stats)
     h2_path = astar(board, h2, h2_stats)
+    h3_path = astar(board, h3, h3_stats)
 
     h1_moves = len(h1_path) - 1
     h2_moves = len(h2_path) - 1
+    h3_moves = len(h3_path) - 1
 
     print("This puzzle requires", target_depth, "moves to solve:")
     board.display()
 
-    print(f"{'':<20}{'h1':>12}{'h2':>12}")
-    print(f"{'Starting value':<20}{h1(board):>12}{h2(board):>12}")
-    print(f"{'Solution moves':<20}{h1_moves:>12}{h2_moves:>12}")
+    print(f"{'':<20}{'h1':>12}{'h2':>12}{'h3':>12}")
+    print(f"{'Starting value':<20}{h1(board):>12}{h2(board):>12}{h3(board):>12}")
+    print(f"{'Solution moves':<20}{h1_moves:>12}{h2_moves:>12}{h3_moves:>12}")
     print(
         f"{'States expanded':<20}"
         f"{h1_stats['states_expanded']:>12}"
         f"{h2_stats['states_expanded']:>12}"
+        f"{h3_stats['states_expanded']:>12}"
     )
     print(
         f"{'States discovered':<20}"
         f"{h1_stats['states_discovered']:>12}"
         f"{h2_stats['states_discovered']:>12}"
+        f"{h3_stats['states_discovered']:>12}"
     )
 
-    return h1_stats, h2_stats
+    return h1_stats, h2_stats, h3_stats
 
 
 if __name__ == "__main__":
