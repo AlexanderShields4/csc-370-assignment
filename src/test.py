@@ -34,9 +34,11 @@ def make_random_board(target_depth):
     return PuzzleBoard(random_state.copy())
 
 
-def compare_heuristics():
-    target_depth = random.randint(2, 24)
-    board = make_random_board(target_depth)
+def compare_heuristics(target_depth=None, board=None, show_results=True):
+    if target_depth is None:
+        target_depth = random.randint(2, 24)
+    if board is None:
+        board = make_random_board(target_depth)
 
     h1_stats = {}
     h2_stats = {}
@@ -49,6 +51,10 @@ def compare_heuristics():
     h1_moves = len(h1_path) - 1
     h2_moves = len(h2_path) - 1
     h3_moves = len(h3_path) - 1
+
+    results = h1_stats, h2_stats, h3_stats
+    if not show_results:
+        return results
 
     print("This puzzle requires", target_depth, "moves to solve:")
     board.display()
@@ -69,7 +75,57 @@ def compare_heuristics():
         f"{h3_stats['states_discovered']:>12}"
     )
 
-    return h1_stats, h2_stats, h3_stats
+    return results
+
+
+def effective_branching_factor(nodes, depth):
+    low = 0.0
+    high = nodes + 1.0
+
+    for _ in range(50):
+        middle = (low + high) / 2
+        total = sum(middle ** level for level in range(depth + 1))
+
+        if total < nodes + 1:
+            low = middle
+        else:
+            high = middle
+
+    return (low + high) / 2
+
+
+def run_experiments(number_of_problems=100):
+    random.seed(370)
+    print(
+        f"{'Depth':<8}"
+        f"{'h1 nodes':>12}{'h1 b*':>12}"
+        f"{'h2 nodes':>12}{'h2 b*':>12}"
+        f"{'h3 nodes':>12}{'h3 b*':>12}"
+    )
+
+    for depth in range(2, 25, 2):
+        depth_level = make_depth_level(depth)
+        totals = [[0, 0.0] for _ in range(3)]
+
+        for _ in range(number_of_problems):
+            state = random.choice(depth_level)
+            board = PuzzleBoard(state.copy())
+            results = compare_heuristics(depth, board, False)
+
+            for index, stats in enumerate(results):
+                nodes = stats["states_expanded"]
+                totals[index][0] += nodes
+                totals[index][1] += effective_branching_factor(nodes, depth)
+
+        print(
+            f"{depth:<8}"
+            f"{totals[0][0] / number_of_problems:>12.2f}"
+            f"{totals[0][1] / number_of_problems:>12.2f}"
+            f"{totals[1][0] / number_of_problems:>12.2f}"
+            f"{totals[1][1] / number_of_problems:>12.2f}"
+            f"{totals[2][0] / number_of_problems:>12.2f}"
+            f"{totals[2][1] / number_of_problems:>12.2f}"
+        )
 
 
 if __name__ == "__main__":
