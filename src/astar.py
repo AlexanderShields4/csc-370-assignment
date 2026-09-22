@@ -66,8 +66,8 @@ def h3(board):
                     continue
                 goal2 = GOAL.index(tile2)
                 
-            if goal2 // 3 == row and goal1 > goal2:
-                conflicts += 1
+                if goal2 // 3 == row and goal1 > goal2:
+                    conflicts += 1
                 
     for col in range(3):
 
@@ -79,7 +79,7 @@ def h3(board):
                 continue
             goal1 = GOAL.index(tile1)
             
-            if goal1 // 3 != col:
+            if goal1 % 3 != col:
                 continue
                 
             for row2 in range(row1 + 1, 3):
@@ -90,7 +90,7 @@ def h3(board):
                     continue
                 goal2 = GOAL.index(tile2)
                 
-                if goal2 // 3 == col and goal1 > goal2:
+                if goal2 % 3 == col and goal1 > goal2:
                     conflicts +=1
 
 return distance + 2 * conflicts
