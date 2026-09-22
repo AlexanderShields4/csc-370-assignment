@@ -1,6 +1,6 @@
 import random
 
-from astar import astar, h1, h2
+from astar import astar, h1, h2, h3
 from puzzle import GOAL, PuzzleBoard
 
 
