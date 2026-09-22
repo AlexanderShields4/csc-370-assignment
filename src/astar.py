@@ -93,7 +93,7 @@ def h3(board):
                 if goal2 % 3 == col and goal1 > goal2:
                     conflicts +=1
 
-return distance + 2 * conflicts
+    return distance + 2 * conflicts
                     
                 
                 
