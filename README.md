@@ -5,7 +5,6 @@ This repository implements A* search for the 8-puzzle and compares three admissi
 ## Requirements
 
 - Python 3.10 or newer
-- No third-party packages
 
 ## Run the programs
 
@@ -16,6 +15,17 @@ python3 -B src/test.py
 ```
 
 The script prints the mean number of states expanded and mean effective branching factor for h1, h2, and h3 at each depth. It uses only the Python standard library. `-B` prevents Python from writing bytecode files into the repository.
+
+To test one puzzle directly, start Python in `src` and call the existing A* function:
+
+```python
+from astar import astar, h2
+from puzzle import GOAL, PuzzleBoard
+
+path = astar(PuzzleBoard([1, 2, 3, 4, 5, 6, 0, 7, 8]), h2)
+print("Moves:", len(path) - 1)  # 2
+print("Reached goal:", path[-1] == GOAL)  # True
+```
 
 ## Experiment design
 
@@ -46,4 +56,3 @@ The experiment uses A* graph search, storing the best known path cost per board 
 - `src/puzzle.py` defines the goal state and the `PuzzleBoard` representation and moves.
 - `src/astar.py` defines A*, h1, h2, and h3.
 - `src/test.py` generates exact-depth boards, compares heuristics, and runs the repeated experiment.
-- `toDo.md` tracks remaining presentation work.
