@@ -14,7 +14,7 @@ From the repository root, run the full experiment (100 puzzles at each even solu
 python3 -B src/test.py
 ```
 
-The script prints the mean number of states expanded and mean effective branching factor for h1, h2, and h3 at each depth. It uses only the Python standard library. `-B` prevents Python from writing bytecode files into the repository.
+The script prints the mean number of nodes generated and mean effective branching factor for h1, h2, and h3 at each depth. It uses only the Python standard library. `-B` prevents Python from writing bytecode files into the repository.
 
 To test one puzzle directly, start Python in `src` and call the existing A* function:
 
@@ -41,13 +41,13 @@ The h3 heuristic follows Hansson, Mayer, and Yung, “Generating Admissible Heur
 
 ## Measurements
 
-`states_expanded` counts non-goal states removed from A*'s priority queue and expanded. For each puzzle, the program computes effective branching factor `b*` from:
+`nodes_generated` counts every successor board produced when A* expands a state, including successors later rejected as repeated states. It excludes the initial board. `states_expanded` separately counts non-goal states removed from A*'s priority queue and expanded. For each puzzle, the program computes effective branching factor `b*` from:
 
 ```text
 N + 1 = 1 + b* + (b*)^2 + ... + (b*)^d
 ```
 
-Here `N` is the number of states expanded and `d` is the known optimal solution depth. It then reports the mean node count and the mean of the per-puzzle `b*` values at each depth. The primary comparison is how the heuristics reduce expansions and `b*` as depth increases; elapsed time is not used as the main measure.
+Here `N` is the number of nodes generated, excluding the initial board, and `d` is the known optimal solution depth. It then reports the mean generated-node count and the mean of the per-puzzle `b*` values at each depth. The primary comparison is how the heuristics reduce generated nodes and `b*` as depth increases; elapsed time is not used as the main measure.
 
 The experiment uses A* graph search, storing the best known path cost per board state. Equal-priority states are ordered by their board-state tuples. These choices, along with the sampled puzzles and the precise node-count definition, should be kept in mind when comparing results with Russell and Norvig.
 
