@@ -132,6 +132,7 @@ def astar(start_board, heuristic, stats=None):
     }
 
     states_expanded = 0
+    nodes_generated = 0
 
     while priority_queue:
         current_f, current_state = heapq.heappop(priority_queue)
@@ -156,6 +157,7 @@ def astar(start_board, heuristic, stats=None):
 
             if stats is not None:
                 stats["states_expanded"] = states_expanded
+                stats["nodes_generated"] = nodes_generated
                 stats["states_discovered"] = len(g_cost)
 
             return path
@@ -163,6 +165,7 @@ def astar(start_board, heuristic, stats=None):
         states_expanded += 1
 
         for neighbor in current_board.get_neighbors():
+            nodes_generated += 1
             neighbor_state = tuple(neighbor.state)
 
             neighbor_g = current_g + 1
@@ -179,6 +182,7 @@ def astar(start_board, heuristic, stats=None):
 
     if stats is not None:
         stats["states_expanded"] = states_expanded
+        stats["nodes_generated"] = nodes_generated
         stats["states_discovered"] = len(g_cost)
 
     return None

@@ -63,6 +63,12 @@ def compare_heuristics(target_depth=None, board=None, show_results=True):
     print(f"{'Starting value':<20}{h1(board):>12}{h2(board):>12}{h3(board):>12}")
     print(f"{'Solution moves':<20}{h1_moves:>12}{h2_moves:>12}{h3_moves:>12}")
     print(
+        f"{'Nodes generated':<20}"
+        f"{h1_stats['nodes_generated']:>12}"
+        f"{h2_stats['nodes_generated']:>12}"
+        f"{h3_stats['nodes_generated']:>12}"
+    )
+    print(
         f"{'States expanded':<20}"
         f"{h1_stats['states_expanded']:>12}"
         f"{h2_stats['states_expanded']:>12}"
@@ -98,9 +104,9 @@ def run_experiments(number_of_problems=100):
     random.seed(370)
     print(
         f"{'Depth':<8}"
-        f"{'h1 nodes':>12}{'h1 b*':>12}"
-        f"{'h2 nodes':>12}{'h2 b*':>12}"
-        f"{'h3 nodes':>12}{'h3 b*':>12}"
+        f"{'h1 generated':>12}{'h1 b*':>12}"
+        f"{'h2 generated':>12}{'h2 b*':>12}"
+        f"{'h3 generated':>12}{'h3 b*':>12}"
     )
 
     for depth in range(2, 25, 2):
@@ -113,7 +119,7 @@ def run_experiments(number_of_problems=100):
             results = compare_heuristics(depth, board, False)
 
             for index, stats in enumerate(results):
-                nodes = stats["states_expanded"]
+                nodes = stats["nodes_generated"]
                 totals[index][0] += nodes
                 totals[index][1] += effective_branching_factor(nodes, depth)
 
